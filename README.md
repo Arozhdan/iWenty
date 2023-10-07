@@ -1,12 +1,8 @@
 # [Payload CMS](https://payloadcms.com/) and [Remix](https://remix.run/) monorepo
 
-This is an example repository of how to set up Payload CMS for content management together with Remix, in such a manner that each application is divided into its own package (including the express server app).
-
-The Payload instance is injected into Remix loaders and actions through request context. This way we are free to use the Payload Local API for data, user and authentication management, while avoiding payload having to be bundled together with the remix server build. With this setup you can even use the Payload Authentication middleware in your remix application.
-
 ## What's inside?
 
-This monorepo is using `pnpm` for package management. While it is an easy task to switch to `yarn` instead, setting this up with `npm` workspaces can be trickier. For monorepos we do recommend `pnpm` due to its ability to handle hoisting in a better way, which avoids dependency related issues.
+This monorepo is using `pnpm` for package management.
 
 ### Apps and Packages
 
@@ -40,3 +36,11 @@ Remix is reloaded without restarting the express server by purging the node `req
 To build all apps and packages, run `pnpm run build` from the root of the monorepo. Turborepo will take care of running the build scripts in order so that packages depending on other monorepo packages is built last.
 
 If you want, serve your production build with `pnpm run serve` from the root of the monorepo.
+
+### Defaults
+
+- `PORT`: 3000
+
+### ENV
+
+- MongoDB Connection URL
