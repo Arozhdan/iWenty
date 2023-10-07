@@ -9,15 +9,18 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    pages: Page;
+    'user-preferences': UserPreference;
   };
-  // eslint-disable-next-line @typescript-eslint/ban-types
   globals: {};
 }
 export interface User {
   id: string;
   name: string;
-  role: 'admin' | 'user';
+  birthDate: string;
+  image?: string | Media;
+  bio: string;
+  role: 'admin' | 'editor' | 'user';
+  preferences?: string | UserPreference;
   email?: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
@@ -53,57 +56,61 @@ export interface Media {
       filesize?: number;
       filename?: string;
     };
+    banner: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    og: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    twitter: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    square: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    thumbnail: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
   };
   createdAt: string;
   updatedAt: string;
 }
-export interface Page {
+export interface UserPreference {
   id: string;
-  title: string;
-  image?: string | Media;
-  public?: boolean;
-  layout: (
-    | {
-        content?: {
-          [k: string]: unknown;
-        }[];
-        buttons: {
-          label: string;
-          type: 'page' | 'custom';
-          page?: string | Page;
-          url?: string;
-          newTab: boolean;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'cta';
-      }
-    | {
-        content?: {
-          [k: string]: unknown;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'content';
-      }
-    | {
-        image: string | Media;
-        type: 'card' | 'feature';
-        caption?: {
-          [k: string]: unknown;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image';
-      }
-  )[];
-  meta: {
-    title?: string;
-    description?: string;
-    keywords?: string;
-  };
-  slug?: string;
+  showActivity: boolean;
+  showBirthDate: boolean;
+  allowPushNotifications: boolean;
+  email?: string;
+  resetPasswordToken?: string;
+  resetPasswordExpiration?: string;
+  loginAttempts?: number;
+  lockUntil?: string;
   createdAt: string;
   updatedAt: string;
+  password?: string;
 }

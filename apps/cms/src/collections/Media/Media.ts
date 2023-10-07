@@ -19,6 +19,31 @@ const Media: CollectionConfig = {
                 width: 1024,
                 height: 576,
             },
+            {
+                name: 'banner',
+                width: 1440,
+                height: 810,
+            },
+            {
+                name: 'og',
+                width: 1200,
+                height: 630,
+            },
+            {
+                name: 'twitter',
+                width: 1024,
+                height: 512,
+            },
+            {
+                name: 'square',
+                width: 1024,
+                height: 1024,
+            },
+            {
+                name: 'thumbnail',
+                width: 128,
+                height: 128,
+            },
         ],
     },
     fields: [

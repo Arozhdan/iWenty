@@ -28,8 +28,8 @@ if (fs.existsSync(localEnvFilePath)) {
     }
 }
 
-const MONGODB_URL = process.env.MONGODB_URL ?? "";
-const PAYLOADCMS_SECRET = process.env.PAYLOADCMS_SECRET ?? "";
+const MONGODB_URL = process.env.MONGODB_URL ?? '';
+const PAYLOADCMS_SECRET = process.env.PAYLOADCMS_SECRET ?? '';
 const ENVIRONMENT = process.env.NODE_ENV;
 
 // During development this is fine. Conditionalize this for production as needed.
@@ -52,29 +52,42 @@ app.use(
         redirect: false,
     })
 );
-app.use(
-    '/web',
-    express.static(WEB_PUBLIC_DIR, { maxAge: '1h', redirect: false })
-);
+// app.use(
+//     '/web',
+//     express.static(WEB_PUBLIC_DIR, { maxAge: '1h', redirect: false })
+// );
 
-payload.init({
-    express: app,
-    mongoURL: MONGODB_URL,
-    secret: PAYLOADCMS_SECRET,
-    onInit: () => {
-        payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
-    },
-}).then(() => {
+payload
+    .init({
+        express: app,
+        mongoURL: MONGODB_URL,
+        secret: PAYLOADCMS_SECRET,
+        onInit: () => {
+            payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+        },
+    })
+    .then(() => {
+        app.use(payload.authenticate);
 
-    app.use(payload.authenticate);
-    
-    app.all(
-        '*',
-        ENVIRONMENT === 'development'
-            ? (req, res, next) => {
-                  purgeRequireCache();
-    
-                  return createRequestHandler({
+        app.all(
+            '*',
+            ENVIRONMENT === 'development'
+                ? (req, res, next) => {
+                      purgeRequireCache();
+
+                      return createRequestHandler({
+                          build: require(WEB_BUILD_DIR),
+                          mode: ENVIRONMENT,
+                          getLoadContext(req, res) {
+                              return {
+                                  payload: req.payload,
+                                  user: req?.user,
+                                  res,
+                              };
+                          },
+                      })(req, res, next);
+                  }
+                : createRequestHandler({
                       build: require(WEB_BUILD_DIR),
                       mode: ENVIRONMENT,
                       getLoadContext(req, res) {
@@ -84,28 +97,15 @@ payload.init({
                               res,
                           };
                       },
-                  })(req, res, next);
-              }
-            : createRequestHandler({
-                  build: require(WEB_BUILD_DIR),
-                  mode: ENVIRONMENT,
-                  getLoadContext(req, res) {
-                      return {
-                          payload: req.payload,
-                          user: req?.user,
-                          res,
-                      };
-                  },
-              })
-    );
-    
-    const port = process.env.PORT || 3000;
-    
-    app.listen(port, () => {
-        console.log(`Express server listening on port ${port}`);
-    });
-});
+                  })
+        );
 
+        const port = process.env.PORT || 3000;
+
+        app.listen(port, () => {
+            console.log(`Express server listening on port ${port}`);
+        });
+    });
 
 function purgeRequireCache() {
     // purge require cache on requests for "server side HMR" this won't let
