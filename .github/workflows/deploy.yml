@@ -60,4 +60,5 @@ jobs:
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
                       chmod +x ${{ secrets.TARG_DIR }}/pm2_runner.sh
-                      sudo ${{ secrets.TARG_DIR }}/pm2_runner.sh
+                      cd ${{ secrets.TARG_DIR }}
+                        ./pm2_runner.sh
