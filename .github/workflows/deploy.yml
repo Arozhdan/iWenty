@@ -59,6 +59,7 @@ jobs:
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: ${{ secrets.SSH_PORT }}
                   script: |
-                      PM2PATH=$(whereis pm2)
-                      sudo ln -s . $PM2PATH
-                      pm2 startOrRestart ecosystem.config.js --env production
+                      PM2PATH=$(which pm2)
+                      export PATH=$PM2PATH
+                      cd ${{ secrets.TARG_DIR }}
+                        pm2 startOrRestart ecosystem.config.js --env production
