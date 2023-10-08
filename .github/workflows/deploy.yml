@@ -14,27 +14,27 @@ jobs:
                 node-version: [18]
 
         steps:
-            # - name: Checkout
-            #   uses: actions/checkout@v3
-            #   with:
-            #       fetch-depth: 0
+            - name: Checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
-            # - name: Use pnpm
-            #   uses: pnpm/action-setup@v2.2.4
-            #   with:
-            #       version: 7
+            - name: Use pnpm
+              uses: pnpm/action-setup@v2.2.4
+              with:
+                  version: 7
 
-            # - name: Use Node.js ${{ matrix.node-version }}
-            #   uses: actions/setup-node@v3
-            #   with:
-            #       node-version: ${{ matrix.node-version }}
-            #       cache: pnpm
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: pnpm
 
-            # - name: Install dependencies
-            #   run: pnpm install
+            - name: Install dependencies
+              run: pnpm install
 
-            # - name: Build project
-            #   run: pnpm run build
+            - name: Build project
+              run: pnpm run build
 
             - name: Install SSH Key
               uses: shimataro/ssh-key-action@v2
@@ -45,14 +45,14 @@ jobs:
             - name: Adding known_hosts
               run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
-            # - name: Remove old deploy
-            #   run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
+            - name: Remove old deploy
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
 
-            # - name: Deploy with rsync
-            #   run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
+            - name: Deploy with rsync
+              run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
 
             - name: Try stop and delete pm2 process
               run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 delete ${{ secrets.TARG_DIR }}/ecosystem.config.js
 
             - name: Start / restart pm2 in TARG_DIR
-              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 start ${{ secrets.TARG_DIR }}/ecosystem.config.js --env production
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 start ${{ secrets.TARG_DIR }} pnpm -- run serve
