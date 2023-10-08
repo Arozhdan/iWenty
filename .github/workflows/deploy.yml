@@ -51,5 +51,8 @@ jobs:
             # - name: Deploy with rsync
             #   run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
 
+            - name: Try stop and delete pm2 process
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 delete ${{ secrets.TARG_DIR }}/ecosystem.config.js
+
             - name: Start / restart pm2 in TARG_DIR
-              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 startOrRestart ${{ secrets.TARG_DIR }}/ecosystem.config.js --env production
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 start ${{ secrets.TARG_DIR }}/ecosystem.config.js --env production
