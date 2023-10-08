@@ -53,9 +53,9 @@ jobs:
 
             - name: Start/Re-start PM2
               uses: appleboy/ssh-action@v1.0.0
-                with:
-                    host: ${{ secrets.SSH_HOST }}
-                    username: ${{ secrets.SSH_USER }}
-                    key: ${{ secrets.SSH_PRIVATE_KEY }}
-                    port: ${{ secrets.SSH_PORT }}
-                    script: cd ${{ secrets.TARG_DIR }} && pm2 startOrRestart ecosystem.config.js --env production
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: cd ${{ secrets.TARG_DIR }} && pm2 startOrRestart ecosystem.config.js --env production
