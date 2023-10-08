@@ -1,8 +1,8 @@
 module.exports = {
     apps: [{
         name: 'app',
-        script: 'npm',
-        args: 'run serve',
+        script: 'pnpm',
+        args: 'serve',
         instances: 1,
         autorestart: true,
     }],
