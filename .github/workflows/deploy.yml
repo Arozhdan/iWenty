@@ -52,7 +52,7 @@ jobs:
             #   run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
 
             - name: Try stop and delete pm2 process
-              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 delete all
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} sudo pm2 delete all
 
             - name: Start / restart pm2 in TARG_DIR
               run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} cd ${{ secrets.TARG_DIR }} && pm2 start pnpm --name ${{ secrets.TARG_DIR }} -- serve
