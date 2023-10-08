@@ -52,5 +52,4 @@ jobs:
             #   run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
 
             - name: Start / Restart PM2
-            - run chmod +x ./pm2_runners.sh
-            - run bash ./pm2_runners.sh
+              run: chmod +x ./pm2_runners.sh && ./pm2_runners.sh
