@@ -59,6 +59,5 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
-                      cd ${{ secrets.TARG_DIR }}
-                      sudo chmod +x pm2_runner.sh
-                      sudo bash ./pm2_runner.sh
+                      chmod +x ${{ secrets.TARG_DIR }}/pm2_runner.sh
+                      sudo ${{ secrets.TARG_DIR }}/pm2_runner.sh
