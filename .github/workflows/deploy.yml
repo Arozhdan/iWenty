@@ -58,4 +58,7 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   port: ${{ secrets.SSH_PORT }}
-                  script: cd ${{ secrets.TARG_DIR }} && pm2 startOrRestart ecosystem.config.js --env production
+                  script: |
+                      cd ${{ secrets.TARG_DIR }}
+                      PM2PATH=$(which pm2)
+                      $PM2PATH restart ecosystem.config.js --env production
