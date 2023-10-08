@@ -18,7 +18,9 @@
         "@org/eslint-config": "workspace:*",
         "prettier": "^2.8.4",
         "turbo": "^1.7.4",
-        "typescript": "^4.9.5"
+        "typescript": "^4.9.5",
+        "rimraf": "^5.0.5",
+        "mkdirp": "^3.0.1"
     },
     "engines": {
         "node": ">=16.0.0"
