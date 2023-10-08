@@ -52,4 +52,4 @@ jobs:
             #   run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
 
             - name: Start / restart pm2 in TARG_DIR
-              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 startOrRestart  ${{secrets.TARG_DIR}}/ecosystem.config.js --env production
+              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} pm2 stop all && pm2 delete all && pm2 start ${{ secrets.TARG_DIR }}/ecosystem.config.js --env production
