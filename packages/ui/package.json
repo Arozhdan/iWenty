@@ -3,12 +3,12 @@
     "version": "1.0.0",
     "license": "MIT",
     "sideEffects": false,
-    "main": "./src/index.tsx",
+    "main": "index.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.esm.js",
-            "require": "./dist/index.esm.js"
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
         },
         "./styles.css": {
             "import": "./src/styles/ui.css",
@@ -17,10 +17,9 @@
     },
     "scripts": {
         "dev": "rollup -c -w",
-        "build": "rimraf dist && rollup -c",
+        "build": "rollup -c",
         "clean": "rimraf node_modules dist .turbo",
-        "lint": "eslint --ext .ts,.tsx,.js,.jsx ./src",
-        "prepublishOnly": "pnpm run build"
+        "lint": "eslint --ext .ts,.tsx,.js,.jsx ./src"
     },
     "peerDependencies": {
         "react": "^18.2.0"

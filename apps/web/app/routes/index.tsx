@@ -8,18 +8,5 @@ export default function Index() {
     const [{ data }] = matches;
     // const { user } = (data as RootLoaderData) || {};
 
-    return (
-        <div>
-            {
-                <Button
-                    size="small"
-                    href="https://google.com"
-                    target="_blank"
-                    as="a"
-                >
-                    123
-                </Button>
-            }
-        </div>
-    );
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
