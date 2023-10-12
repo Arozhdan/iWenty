@@ -1,8 +1,16 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist",
         "baseUrl": "./src",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "declarationDir": "./dist",
+        "declaration": true,
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "target": "es5"
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*"],
+    "exclude": ["dist", "build", "node_modules"]
 }

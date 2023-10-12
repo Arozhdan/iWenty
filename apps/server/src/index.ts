@@ -52,10 +52,10 @@ app.use(
         redirect: false,
     })
 );
-// app.use(
-//     '/web',
-//     express.static(WEB_PUBLIC_DIR, { maxAge: '1h', redirect: false })
-// );
+app.use(
+    '/web',
+    express.static(WEB_PUBLIC_DIR, { maxAge: '1h', redirect: false })
+);
 
 payload
     .init({

@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-
 type Sizes = 'small' | 'medium' | 'large';
 const getSize = (size: Sizes) => {
     const widths: Record<Sizes, React.CSSProperties> = {
@@ -67,6 +65,5 @@ export function Button({
         ...getSize(size),
         ...getColor(color),
     };
-
     return <Component style={styles} {...rest} />;
 }

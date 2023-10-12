@@ -1,4 +1,4 @@
-import type { Page, User } from '@org/cms';
+import type { User } from '@org/cms';
 import type {
     ErrorBoundaryComponent,
     LinksFunction,
@@ -6,7 +6,6 @@ import type {
     MetaFunction,
     TypedResponse,
 } from '@remix-run/node';
-import { redirect } from '@remix-run/node';
 import {
     Links,
     LiveReload,
@@ -37,7 +36,6 @@ export const links: LinksFunction = () => [
 ];
 
 export type RootLoaderData = {
-    pages: Page[];
     user?: {
         user?: User;
         token?: string;
@@ -48,18 +46,15 @@ export const loader: LoaderFunction = async ({
     context: { payload, user },
     request,
 }): Promise<RootLoaderData | TypedResponse<never>> => {
-    const { pathname } = new URL(request.url);
-    if (pathname === '/') {
-        return redirect('/home');
-    }
+    // const { pathname } = new URL(request.url);
 
-    const { docs: pages } = await payload.find({
-        collection: 'pages',
-        user,
-        overrideAccess: false,
-    });
+    // const { docs: pages } = await payload.find({
+    //     collection: 'pages',
+    //     user,
+    //     overrideAccess: false,
+    // });
 
-    return { pages, user };
+    return { user };
 };
 
 export default function App() {
