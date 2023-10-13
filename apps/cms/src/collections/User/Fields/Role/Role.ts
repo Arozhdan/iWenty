@@ -6,15 +6,15 @@ export enum Role {
 
 export const roleOptions = [
     {
-        label: Role.ADMIN,
+        label: 'Admin',
         value: Role.ADMIN,
     },
     {
-        label: Role.EDITOR,
+        label: 'Editor',
         value: Role.EDITOR,
     },
     {
-        label: Role.USER,
+        label: 'User',
         value: Role.USER,
     },
 ];

@@ -20,7 +20,7 @@ import styles from './styles/global.css';
 
 export const meta: MetaFunction = () => ({
     charset: 'utf-8',
-    title: 'Payload CMS & Remix Monorepo',
+    title: 'Iwenty',
     viewport: 'width=device-width,initial-scale=1',
 });
 

@@ -1,6 +1,7 @@
 import { Field } from 'payload/types';
 import { TagsField } from '../../../shared/Fields';
 import { Tab } from 'payload/dist/fields/config/types';
+import { ManageroleOptions } from './Manager/Manager';
 
 export const bodyFields: Field[] = [
     {
@@ -14,8 +15,56 @@ export const bodyFields: Field[] = [
         relationTo: 'media',
     },
     {
+        type: 'row',
+        fields: [
+            {
+                name: 'rating',
+                type: 'number',
+                max: 5,
+                min: 0,
+            },
+            {
+                name: 'feedbackCount',
+                type: 'number',
+                admin: {
+                    condition: (_, siblingData) => siblingData.rating > 0,
+                },
+            },
+        ],
+    },
+    {
+        type: 'group',
         name: 'location',
-        type: 'text',
+        label: 'Location',
+        fields: [
+            {
+                name: 'location',
+                type: 'point',
+                label: 'Location',
+            },
+            {
+                name: 'address',
+                type: 'textarea',
+            },
+        ],
+    },
+    {
+        type: 'group',
+        name: 'social',
+        label: 'Social Media',
+        fields: [
+            {
+                name: 'instagram',
+                type: 'text',
+            },
+            {
+                name: 'instagramVerified',
+                type: 'checkbox',
+                admin: {
+                    condition: (_, siblingData) => siblingData.instagram,
+                },
+            },
+        ],
     },
 ];
 
@@ -36,5 +85,32 @@ export const tabs: Tab[] = [
     {
         label: 'Related',
         fields: relationshipFields,
+    },
+    {
+        label: 'Access',
+        fields: [
+            {
+                type: 'array',
+                name: 'managers',
+                label: 'Venue Managers',
+                fields: [
+                    {
+                        type: 'row',
+                        fields: [
+                            {
+                                name: 'user',
+                                type: 'relationship',
+                                relationTo: 'users',
+                            },
+                            {
+                                name: 'role',
+                                type: 'select',
+                                options: ManageroleOptions,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     },
 ];

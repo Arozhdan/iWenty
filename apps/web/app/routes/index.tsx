@@ -1,5 +1,5 @@
-import { Button } from '@org/ui';
 import { useMatches } from '@remix-run/react';
+import { Button } from '@org/ui';
 import type { RootLoaderData } from '~/root';
 
 export default function Index() {
@@ -8,5 +8,9 @@ export default function Index() {
     const [{ data }] = matches;
     // const { user } = (data as RootLoaderData) || {};
 
-    return <pre>{JSON.stringify(data, null, 2)}</pre>;
+    return (
+        <>
+            <pre>{JSON.stringify(data, null, 2)}</pre>;
+        </>
+    );
 }

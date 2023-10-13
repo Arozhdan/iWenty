@@ -8,8 +8,10 @@
 export interface Config {
   collections: {
     users: User;
-    media: Media;
     'user-preferences': UserPreference;
+    venues: Venue;
+    events: Event;
+    media: Media;
   };
   globals: {};
 }
@@ -18,9 +20,27 @@ export interface User {
   name: string;
   birthDate: string;
   image?: string | Media;
-  bio: string;
-  role: 'admin' | 'editor' | 'user';
+  bio?: string;
+  tags?: (
+    | 'fast-food'
+    | 'italian'
+    | 'sweet'
+    | 'bbq'
+    | 'outdoor'
+    | 'swimming'
+    | 'hiking'
+    | 'camping'
+    | 'sports'
+    | 'clubbing'
+    | 'bar-hopping'
+    | 'concerts'
+    | 'dancing'
+    | 'movie-night'
+    | 'extreme'
+  )[];
   preferences?: string | UserPreference;
+  followingUsers?: string[] | User[];
+  role: 'admin' | 'editor' | 'user';
   email?: string;
   resetPasswordToken?: string;
   resetPasswordExpiration?: string;
@@ -105,12 +125,46 @@ export interface UserPreference {
   showActivity: boolean;
   showBirthDate: boolean;
   allowPushNotifications: boolean;
-  email?: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
   createdAt: string;
   updatedAt: string;
-  password?: string;
+}
+export interface Venue {
+  id: string;
+  name: string;
+  image?: string | Media;
+  rating?: number;
+  feedbackCount?: number;
+  location: {
+    /**
+     * @minItems 2
+     * @maxItems 2
+     */
+    location?: [number, number];
+    address?: string;
+  };
+  social: {
+    instagram?: string;
+    instagramVerified?: boolean;
+  };
+  owner?: string | User;
+  managers: {
+    user?: string | User;
+    role?: 'admin' | 'editor';
+    id?: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+}
+export interface Event {
+  id: string;
+  name?: string;
+  slug?: string;
+  description?: string;
+  isPaid?: boolean;
+  isRecurring?: boolean;
+  image?: string | Media;
+  capacity?: number;
+  slots?: number;
+  createdAt: string;
+  updatedAt: string;
 }

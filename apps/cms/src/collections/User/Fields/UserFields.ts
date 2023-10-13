@@ -2,7 +2,6 @@ import { Field } from 'payload/types';
 import { Role, roleOptions } from './Role/Role';
 import { TagsField } from '../../../shared/Fields';
 import { Tab } from 'payload/dist/fields/config/types';
-import { venuesSlug } from '../../Venue';
 
 export const bodyFields: Field[] = [
     {
@@ -24,23 +23,10 @@ export const bodyFields: Field[] = [
         name: 'bio',
         type: 'textarea',
     },
-    {
-        name: 'role',
-        type: 'select',
-        required: true,
-        defaultValue: Role.USER,
-        options: roleOptions,
-    },
 ];
 
 export const relationshipFields: Field[] = [
     TagsField,
-    {
-        name: 'venues',
-        type: 'relationship',
-        relationTo: venuesSlug,
-        hasMany: true,
-    },
     {
         name: 'preferences',
         type: 'relationship',
@@ -55,7 +41,7 @@ export const relationshipFields: Field[] = [
     },
 ];
 
-export const tabs: Tab[] = [
+const tabs: Tab[] = [
     {
         label: 'Main',
         fields: bodyFields,
@@ -63,5 +49,22 @@ export const tabs: Tab[] = [
     {
         label: 'Related',
         fields: relationshipFields,
+    },
+];
+
+export const fields: Field[] = [
+    {
+        type: 'tabs',
+        tabs,
+    },
+    {
+        name: 'role',
+        type: 'select',
+        required: true,
+        defaultValue: Role.USER,
+        options: roleOptions,
+        admin: {
+            position: 'sidebar',
+        },
     },
 ];

@@ -21,7 +21,7 @@ const setDefaultPreferencesIfDontExist: CollectionBeforeChangeHook<
             },
         });
 
-        data.preferences = newPreferences.id;
+        data.preferences = newPreferences.id.toString();
     } catch (err) {
         console.log('err is ', err);
     }

@@ -24,6 +24,7 @@
         }
     },
     "scripts": {
+        "payload": "cross-env PAYLOAD_CONFIG_PATH=src/config.ts payload",
         "clean": "rimraf node_modules dist build .turbo",
         "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/config.ts payload build",
         "build:server": "rimraf dist && tsc",
@@ -35,7 +36,11 @@
     },
     "dependencies": {
         "@org/ui": "workspace:*",
-        "payload": "^1.6.9"
+        "@payloadcms/bundler-webpack": "^1.0.3",
+        "@payloadcms/db-mongodb": "^1.0.3",
+        "@payloadcms/richtext-slate": "^1.0.3",
+        "payload": "2.0.0",
+        "slugify": "^1.6.6"
     },
     "devDependencies": {
         "@org/shared": "workspace:*",

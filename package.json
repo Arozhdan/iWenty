@@ -7,7 +7,7 @@
         "apps/*"
     ],
     "scripts": {
-        "clean": "turbo run clean && rm -rf node_modules",
+        "clean": "turbo run clean && rimraf node_modules",
         "build": "turbo run build",
         "serve": "turbo run serve",
         "dev": "turbo run dev --parallel",
