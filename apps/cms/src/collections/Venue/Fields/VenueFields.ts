@@ -38,7 +38,11 @@ export const bodyFields: Field[] = [
         label: 'Location',
         fields: [
             {
-                name: 'location',
+                type: 'text',
+                name: 'mapUrl',
+            },
+            {
+                name: 'point',
                 type: 'point',
                 label: 'Location',
             },

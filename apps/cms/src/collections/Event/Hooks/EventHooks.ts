@@ -4,14 +4,30 @@ import slugify from 'slugify';
 
 const setDefaultPreferencesIfDontExist: CollectionBeforeChangeHook<
     Event
-> = async ({ data, req, operation }) => {
+> = async ({ data, req }) => {
     try {
         if (data.slug || !data.name) return;
 
-        const slug = slugify(data.name, {
+        let slug = slugify(data.name, {
             lower: true,
             trim: true,
         });
+
+        const { payload } = req;
+
+        const existing = await payload.find({
+            collection: 'events',
+            where: {
+                slug: {
+                    equals: slug,
+                },
+            },
+        });
+
+        if (existing.docs.length > 0) {
+            const randomString = Math.random().toString(36).substring(2, 7);
+            slug = `${slug}-${randomString}`;
+        }
 
         data.slug = slug;
     } catch (err) {

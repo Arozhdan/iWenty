@@ -6,6 +6,7 @@ import {
 } from '../../shared/access';
 import { Role } from '../User';
 import { tabs } from './Fields/VenueFields';
+import { hooks } from './Hooks/VenueHooks';
 
 export const slug = 'venues';
 export const Venues: CollectionConfig = {
@@ -34,4 +35,5 @@ export const Venues: CollectionConfig = {
             tabs,
         },
     ],
+    hooks,
 };

@@ -5,6 +5,9 @@ import { fields } from './Fields/UserPreferencesFields';
 export const slug = 'user-preferences';
 export const UserPreferences: CollectionConfig = {
     slug,
+    admin: {
+        hidden: () => true,
+    },
     access: {
         read: authenticatedAndAdmin,
         admin: authenticatedAndAdmin,
