@@ -19,22 +19,22 @@ jobs:
               with:
                   fetch-depth: 0
 
-            # - name: Use pnpm
-            #   uses: pnpm/action-setup@v2.2.4
-            #   with:
-            #       version: 7
+            - name: Use pnpm
+              uses: pnpm/action-setup@v2.2.4
+              with:
+                  version: 7
 
-            # - name: Use Node.js ${{ matrix.node-version }}
-            #   uses: actions/setup-node@v3
-            #   with:
-            #       node-version: ${{ matrix.node-version }}
-            #       cache: pnpm
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: pnpm
 
-            # - name: Install dependencies
-            #   run: pnpm install
+            - name: Install dependencies
+              run: pnpm install
 
-            # - name: Build project
-            #   run: pnpm run build
+            - name: Build project
+              run: pnpm run build
 
             - name: Install SSH Key
               uses: shimataro/ssh-key-action@v2
@@ -51,7 +51,7 @@ jobs:
               run: ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
 
             - name: Deploy with rsync
-              run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }} --exclude-from 'exclude.txt' -e "ssh -p ${{ secrets.SSH_PORT }}"
+              run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }} -e "ssh -p ${{ secrets.SSH_PORT }}"
 
             - name: Start / Restart PM2
               uses: appleboy/ssh-action@master
