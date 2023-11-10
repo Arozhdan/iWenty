@@ -42,10 +42,8 @@ jobs:
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   known_hosts: unnecessary
                   config: |
-                      Host ${{ secrets.SSH_HOST }}
-                          HostName ${{ secrets.SSH_HOST }}
-                          User ${{ secrets.SSH_USER }}
-                          Port ${{ secrets.SSH_PORT }}
+                      User root
+                      Port ${{ secrets.SSH_PORT }}
 
             - name: Adding known_hosts
               run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
