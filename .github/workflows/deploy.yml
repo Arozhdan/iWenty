@@ -43,7 +43,7 @@ jobs:
                   known_hosts: unnecessary
 
             - name: Adding known_hosts
-              run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+              run: ssh-keyscan -H -p 207 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
             - name: Remove old deploy
               run: ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
