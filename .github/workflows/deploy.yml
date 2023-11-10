@@ -46,16 +46,17 @@ jobs:
               run: ssh-keyscan -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
 
             - name: Remove old deploy
-              run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
+              run: ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ${{ secrets.TARG_DIR }}
 
             - name: Deploy with rsync
-              run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }}
+              run: rsync -avz . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARG_DIR }} --exclude-from 'exclude.txt' -e "ssh -p ${{ secrets.SSH_PORT }}"
 
             - name: Start / Restart PM2
               uses: appleboy/ssh-action@master
               with:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USER }}
+                  port: ${{ secrets.SSH_PORT }} # default 22
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
                   script: |
                       export PATH=$PATH:/root/.nvm/versions/node/v17.4.0
