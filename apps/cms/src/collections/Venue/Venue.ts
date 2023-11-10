@@ -5,7 +5,7 @@ import {
     authenticatedAndAdmin,
 } from '../../shared/access';
 import { Role } from '../User';
-import { tabs } from './Fields/VenueFields';
+import { fields } from './Fields/VenueFields';
 import { hooks } from './Hooks/VenueHooks';
 
 export const slug = 'venues';
@@ -29,11 +29,6 @@ export const Venues: CollectionConfig = {
             };
         },
     },
-    fields: [
-        {
-            type: 'tabs',
-            tabs,
-        },
-    ],
+    fields,
     hooks,
 };

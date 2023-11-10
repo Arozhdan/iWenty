@@ -6,7 +6,6 @@ import Users from './collections/User';
 import { Payload } from 'payload';
 
 import Media from './collections/Media/Media';
-import UserPreferences from './collections/UserPreferences';
 import { Venues } from './collections/Venue';
 import { Events } from './collections/Event';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
@@ -33,7 +32,7 @@ const config = buildConfig({
     },
     editor: slateEditor({}),
 
-    collections: [Users, UserPreferences, Venues, Events, Media],
+    collections: [Users, Venues, Events, Media],
     typescript: {
         outputFile: path.resolve(__dirname, 'payload-types.ts'),
     },

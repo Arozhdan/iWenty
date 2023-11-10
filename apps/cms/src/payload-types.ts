@@ -136,6 +136,7 @@ export interface UserPreference {
 export interface Venue {
   id: string;
   name: string;
+  slug: string;
   image?: string | Media;
   rating?: number;
   feedbackCount?: number;
@@ -148,16 +149,38 @@ export interface Venue {
     point?: [number, number];
     address?: string;
   };
+  description?: string;
   social?: {
     instagram?: string;
     instagramVerified?: boolean;
+    website?: string;
+    websiteVerified?: boolean;
   };
-  owner?: string | User;
-  managers?: {
-    user?: string | User;
-    role?: 'admin' | 'editor';
+  contacts?: {
+    type?: 'phone' | 'email' | 'address' | 'whatsapp' | 'telegram';
+    value?: string;
     id?: string;
   }[];
+  openingHours?: string;
+  tags?: (
+    | 'fast-food'
+    | 'italian'
+    | 'sweet'
+    | 'bbq'
+    | 'outdoor'
+    | 'swimming'
+    | 'hiking'
+    | 'camping'
+    | 'sports'
+    | 'clubbing'
+    | 'bar-hopping'
+    | 'concerts'
+    | 'dancing'
+    | 'movie-night'
+    | 'extreme'
+  )[];
+  owner?: string | User;
+  isFeatured?: boolean;
   updatedAt: string;
   createdAt: string;
 }

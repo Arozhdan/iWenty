@@ -28,18 +28,40 @@ export const bodyFields: Field[] = [
 export const relationshipFields: Field[] = [
     TagsField,
     {
-        name: 'preferences',
-        type: 'relationship',
-        relationTo: 'user-preferences',
-        hasMany: false,
-    },
-    {
         name: 'followingUsers',
         type: 'relationship',
         relationTo: 'users',
         hasMany: true,
     },
 ];
+
+const preferenceFields: Field[] = [
+    {
+        type: 'group',
+        name: 'preferences',
+        saveToJWT: true,
+        fields: [
+            {
+                name: 'showActivity',
+                type: 'checkbox',
+                label: 'Show activity',
+                defaultValue: true,
+            },
+            {
+                name: 'showBirthDate',
+                type: 'checkbox',
+                label: 'Show birth date',
+                defaultValue: true,
+            },
+            {
+                name: 'showBio',
+                type: 'checkbox',
+                label: 'Show bio',
+                defaultValue: true,
+            },
+        ]
+    }
+]
 
 const tabs: Tab[] = [
     {
@@ -50,6 +72,10 @@ const tabs: Tab[] = [
         label: 'Related',
         fields: relationshipFields,
     },
+    {
+        label: 'Preferences',
+        fields: preferenceFields,
+    }
 ];
 
 export const fields: Field[] = [

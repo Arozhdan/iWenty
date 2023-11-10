@@ -1,6 +1,7 @@
 import { Tab } from 'payload/dist/fields/config/types';
 import { Field } from 'payload/types';
-import { EventStatus, EventStatusOptions } from './EventStatus';
+import { EventStatus, EventStatusOptions } from './helpers/EventStatus';
+import { eventScheduleFields } from './helpers/EventSheduleField';
 
 const bodyFields: Field[] = [
     {
@@ -14,7 +15,6 @@ const bodyFields: Field[] = [
             {
                 name: 'slug',
                 type: 'text',
-                unique: true,
             },
         ],
     },
@@ -22,7 +22,7 @@ const bodyFields: Field[] = [
         type: 'select',
         name: 'status',
         options: EventStatusOptions,
-        defaultValue: EventStatus.DRAFT,
+        defaultValue: EventStatus.PUBLISHED,
     },
     {
         name: 'description',
@@ -45,11 +45,21 @@ const scheduleFields: Field[] = [
         type: 'group',
         name: 'recurringSchedule',
         fields: [
+            ...eventScheduleFields,
             {
-                type: 'relationship',
-                name: 'recurringSchedule',
-                relationTo: 'events',
-            },
+                type: 'array',
+                name: 'occurrences',
+                label: 'Occurrences',
+                fields: [
+                    ...eventScheduleFields,
+                    {
+                        type: 'select',
+                        name: 'status',
+                        options: EventStatusOptions,
+                        defaultValue: EventStatus.PUBLISHED,
+                    },
+                ]
+            }
         ],
         admin: {
             condition: (_, siblingData) => siblingData.isRecurring,
@@ -58,41 +68,32 @@ const scheduleFields: Field[] = [
     {
         type: 'group',
         name: 'schedule',
-        fields: [
-            {
-                type: 'row',
-                fields: [
-                    {
-                        type: 'date',
-                        name: 'startDate',
-                        required: true,
-                    },
-                    {
-                        type: 'text',
-                        name: 'startTime',
-                        required: true,
-                    },
-                ],
-            },
-            {
-                type: 'row',
-                fields: [
-                    {
-                        type: 'date',
-                        name: 'endDate',
-                    },
-                    {
-                        type: 'text',
-                        name: 'endTime',
-                    },
-                ],
-            },
-        ],
+        fields: eventScheduleFields,
         admin: {
             condition: (_, siblingData) => !siblingData.isRecurring,
         },
     },
 ];
+
+const relatedFields: Field[] = [
+    {
+        type: 'relationship',
+        name: 'venue',
+        relationTo: 'venues',
+    },
+    {
+        type: 'relationship',
+        name: 'likedBy',
+        relationTo: 'users',
+        hasMany: true,
+    },
+    {
+        type: 'relationship',
+        name: 'attendees',
+        relationTo: 'users',
+        hasMany: true,
+    }
+]
 
 const tabs: Tab[] = [
     {
@@ -103,6 +104,10 @@ const tabs: Tab[] = [
         label: 'Scheduling',
         fields: scheduleFields,
     },
+    {
+        label: 'Related',
+        fields: relatedFields,
+    }
 ];
 
 export const fields: Field[] = [
