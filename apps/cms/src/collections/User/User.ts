@@ -12,7 +12,7 @@ export const Users: CollectionConfig = {
         useAsTitle: 'name',
     },
     access: {
-        read: authenticated,
+        read: () => true,
         admin: authenticatedAndAdmin,
         create: authenticated,
         delete: authenticatedAndAdmin,
