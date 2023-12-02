@@ -15,7 +15,6 @@ export const Events: CollectionConfig = {
         useAsTitle: 'name',
     },
     access: {
-        read: authenticated,
         admin: authenticatedAndAdmin,
         create: authenticated,
         delete: adminOrOwner,
